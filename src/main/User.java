@@ -7,13 +7,13 @@ public class User {
     private int id;
     private String name;
     private int age;
-    private List<Role> role;
+    private List<Role> roles;
 
-    public User(int id, String name, int age, List<Role> role) {
+    public User(int id, String name, int age, List<Role> roles) {
         this.id = id;
         this.name = name;
         this.age = age;
-        this.role = role;
+        this.roles = roles;
     }
 
     public int getId() {
@@ -40,12 +40,12 @@ public class User {
         this.age = age;
     }
 
-    public List<Role> getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(List<Role> role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -56,12 +56,12 @@ public class User {
         return id == user.id &&
                 age == user.age &&
                 Objects.equals(name, user.name) &&
-                Objects.equals(role, user.role);
+                Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age, role);
+        return Objects.hash(id, name, age, roles);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", role=" + role +
+                ", roles=" + roles +
                 '}';
     }
 }

@@ -73,11 +73,13 @@ public class Program {
         users.add(user8);
         users.add(user9);
 
-        task1(users);
-
-        task2(users);
-
-        //task3(users);
+//        task1(users);
+//        task2(users);
+//        task3(users);
+//        task4(users);
+//        task5(users);
+//        task6(users);
+//        task7(users);
     }
 
     private static void task1(List<User> users){
@@ -106,4 +108,53 @@ public class Program {
         System.out.println(fullAgeUsers);
     }
 
+    //получить список активных пользователей
+    public static void task3(List<User> users) {
+        List<User> activeRoleUsers = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+//            Boolean active = user.getRole();
+            List<Role> roles = user.getRoles();
+            for (int j = 0; j < roles.size(); j++) {
+                Role role = roles.get(j);
+                boolean active = role.isActive();
+                if (active == true) {
+                    activeRoleUsers.add(user);
+                }
+            }
+        }
+        System.out.println(activeRoleUsers);
+    }
+
+    //найдите самого старого админа
+    private static void task4 (List<User> users){
+        User oldestAdmin = null;
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            List<Role> roles = user.getRoles();
+            for (int j = 0; j < roles.size(); j++) {
+                Role role = roles.get(j);
+                String name = role.getName();
+                if (name == "Admin"){
+                    if(oldestAdmin == null){
+                        oldestAdmin = user;
+                    }else {
+                        if (user.getAge() > oldestAdmin.getAge()) {
+                            oldestAdmin = user;
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(oldestAdmin);
+    }
+
+    //найдите первого активного администратора (по самому старому полю role.startDate)
+    private static void task5 (){
+
+    }
+    //группируйте пользователей по возрасту
+    private static void task6 (){}
+    //вычислить средний возраст для каждой роли Map <String, Integer>
+    private static void task7 (){}
 }
