@@ -4,16 +4,22 @@ import java.util.List;
 import java.util.Objects;
 
 public class User {
+
+
     private int id;
     private String name;
     private int age;
     private List<Role> roles;
+    private String gender;
+    private List<Education> educations;
 
-    public User(int id, String name, int age, List<Role> roles) {
+    public User(int id, String name, int age, List<Role> roles, String gender, List<Education> educations) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.roles = roles;
+        this.gender = gender;
+        this.educations = educations;
     }
 
     public int getId() {
@@ -48,6 +54,22 @@ public class User {
         this.roles = roles;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public List<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(List<Education> educations) {
+        this.educations = educations;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,12 +78,14 @@ public class User {
         return id == user.id &&
                 age == user.age &&
                 Objects.equals(name, user.name) &&
-                Objects.equals(roles, user.roles);
+                Objects.equals(roles, user.roles) &&
+                Objects.equals(gender, user.gender) &&
+                Objects.equals(educations, user.educations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age, roles);
+        return Objects.hash(id, name, age, roles, gender, educations);
     }
 
     @Override
@@ -71,6 +95,8 @@ public class User {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", roles=" + roles +
+                ", gender='" + gender + '\'' +
+                ", educations=" + educations +
                 '}';
     }
 }
