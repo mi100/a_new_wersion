@@ -1,15 +1,20 @@
 package main;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
-public class Education {
+public abstract class Education {
 
     private int id;
-    private String tupeOfEducation;
+    private boolean finished;
+    private LocalDate start;
+    private LocalDate end;
 
-    public Education(int id, String tupeOfEducation) {
+    public Education(int id, Boolean finished, LocalDate start, LocalDate end) {
         this.id = id;
-        this.tupeOfEducation = tupeOfEducation;
+        this.finished = finished;
+        this.start = start;
+        this.end = end;
     }
 
     public int getId() {
@@ -20,12 +25,28 @@ public class Education {
         this.id = id;
     }
 
-    public String getTupeOfEducation() {
-        return tupeOfEducation;
+    public boolean isFinished() {
+        return finished;
     }
 
-    public void setTupeOfEducation(String tupeOfEducation) {
-        this.tupeOfEducation = tupeOfEducation;
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public LocalDate getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDate start) {
+        this.start = start;
+    }
+
+    public LocalDate getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDate end) {
+        this.end = end;
     }
 
     @Override
@@ -34,19 +55,23 @@ public class Education {
         if (o == null || getClass() != o.getClass()) return false;
         Education education = (Education) o;
         return id == education.id &&
-                Objects.equals(tupeOfEducation, education.tupeOfEducation);
+                Objects.equals(finished, education.finished) &&
+                Objects.equals(start, education.start) &&
+                Objects.equals(end, education.end);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tupeOfEducation);
+        return Objects.hash(id, finished, start, end);
     }
 
     @Override
     public String toString() {
         return "Education{" +
                 "id=" + id +
-                ", tupeOfEducation='" + tupeOfEducation + '\'' +
+                ", finished=" + finished +
+                ", start=" + start +
+                ", end=" + end +
                 '}';
     }
 }

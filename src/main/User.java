@@ -10,10 +10,10 @@ public class User {
     private String name;
     private int age;
     private List<Role> roles;
-    private String gender;
+    private Gender gender;
     private List<Education> educations;
 
-    public User(int id, String name, int age, List<Role> roles, String gender, List<Education> educations) {
+    public User(int id, String name, int age, List<Role> roles, Gender gender, List<Education> educations) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -54,11 +54,11 @@ public class User {
         this.roles = roles;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
