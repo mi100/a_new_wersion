@@ -1,7 +1,10 @@
 package main;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Period;
+import java.time.temporal.TemporalField;
 import java.util.*;
 
 public class Program {
@@ -187,9 +190,9 @@ public class Program {
         UniversityEducation universityEducationOfUser5 = new UniversityEducation(
                 5,
                 true,
-                LocalDate.of(2023, Month.SEPTEMBER, 1),
-                LocalDate.of(2030, Month.JUNE, 10),
-                "MedicalUniversirty",
+                LocalDate.of(2018, Month.SEPTEMBER, 1),
+                LocalDate.of(2021, Month.JUNE, 10),
+                "Medical",
                 coursesOfUser5UniversityEducation);
 
         List<Education> user5Educations = new ArrayList<>();
@@ -199,13 +202,13 @@ public class Program {
 
         SchoolEducation schoolEducationOfUser6 = new SchoolEducation(
                 6,
-                true,
+                false,
                 LocalDate.of(2000, Month.SEPTEMBER, 1),
                 LocalDate.of(2005, Month.FEBRUARY, 20),
                 "#10");
         SchoolEducation school1EducationOfUser6 = new SchoolEducation(
                 6,
-                true,
+                false,
                 LocalDate.of(2005, Month.FEBRUARY, 28),
                 LocalDate.of(2009, Month.NOVEMBER, 15),
                 "#59");
@@ -261,7 +264,7 @@ public class Program {
 
        UniversityEducation universityEducationOfUser8 = new UniversityEducation(
                8,
-               true,
+               false,
                LocalDate.of(2007, Month.DECEMBER, 1),
                null,
                "KommersiaUniversity",
@@ -367,7 +370,13 @@ public class Program {
 //        task10_2(users);
 //        task11(users);
 //        task12(users);
-        task13(users);
+//        task13(users);
+//        task14(users);
+//        task15(users);
+//        task16(users);
+//        task17(users);
+//        task18(users);
+        task19(users);
 
 
         // ввести новий енам - Стать (чоловык ы жынка),ok
@@ -377,7 +386,7 @@ public class Program {
         // кожен тип це новий клас якицй наслыдуэться выд освыти,ok
         // в середный буде назва школи, статус (закынчили чи ны),  дата початку ы кынця,ok
         // в вищый то саме але ще ы спецыалызыя а ще і список предметів з балом за кожен екзамен,ok
-        //
+
 
     }
     //знайти неосвыдчених людей
@@ -406,9 +415,7 @@ public class Program {
 //                отримати поле про статус овіти
 //                вивести юзера без освіти
     }
-
     // знайти хто не закінчив школу
-
     private static void task9(List<User> users){
         List<User> usersWhoHasNotFinishedSchool = new ArrayList<>();
         for (User user : users) {
@@ -434,7 +441,6 @@ public class Program {
 //        }
     }
     // хто закінчив школу але не поступив
-
     public static void task10_1(List<User> users){
         List<User> usersWhoFinishedSchool = new ArrayList<>();
         for (User user : users) {
@@ -487,22 +493,17 @@ public class Program {
     public static void task11(List<User> users){
         List<User> usersWhoIsNotFinishedUniversityEducation = new ArrayList<>();
         for (User user : users) {
-            boolean isNotFinishedUniversityEducation = false;
             List<Education> educations = user.getEducations();
             for (Education education : educations) {
                 if (education instanceof UniversityEducation){
-                    if (education.isFinished()){
-                        isNotFinishedUniversityEducation = true;
+                    if (!education.isFinished()){
+                        usersWhoIsNotFinishedUniversityEducation.add(user);
                         break;
                     }
                 }
-
             }
-            if (!isNotFinishedUniversityEducation){
-                usersWhoIsNotFinishedUniversityEducation.add(user);
-            }
-
         }
+        System.out.println(usersWhoIsNotFinishedUniversityEducation);
     }
     // хто закінчив універ
     public static void task12(List<User> users){
@@ -527,29 +528,223 @@ public class Program {
 
     }
     // хто закінчив кафедру ІКНІ і при цьому вчився в 32 школі
-
     public static void task13(List<User> users){
-        List<User> usersWhoFinishedUniversity = new ArrayList<>();
+        List<User> usersWhoFinishedScohool32AndIKNIUniversity = new ArrayList<>();
+        for (User user : users) {
+            boolean isFinishedSchool32 = false;
+            boolean isFinishedUiversityІКНІ = false;
+            for (Education education : user.getEducations()) {
+                if (education instanceof SchoolEducation) {
+                    String name = ((SchoolEducation) education).getName();
+                    if ("#32".equals(name)) {
+                        isFinishedSchool32 = true;
+                    }
+                }else if (education instanceof UniversityEducation) {
+                    if (education.isFinished()){
+                        String name = ((UniversityEducation) education).getName();
+                        if ("ІКНІ".equals(name)) {
+                            isFinishedUiversityІКНІ = true;
+                        }
+                    }
+                }
+            }
+
+            if (isFinishedSchool32 && isFinishedUiversityІКНІ) {
+                usersWhoFinishedScohool32AndIKNIUniversity.add(user);
+            }
+        }
+        System.out.println(usersWhoFinishedScohool32AndIKNIUniversity);
+    }
+    // хто закінчив франика в середнім балом бльше 80
+    public static void task14(List<User> users){
+        List<User> usersWhoFinishedFrankaUniversityWithAvgScoregt3 = new ArrayList<>();
         for (User user : users) {
             for (Education education : user.getEducations()) {
+                if (education.isFinished() &&
+                        education instanceof UniversityEducation &&
+                        "Franka".equals(((UniversityEducation) education).getName())
+                ){
+                    List<Course> courses = ((UniversityEducation) education).getCourses();
+                    double avgScore = 0;
+                    for (Course course : courses) {
+                        avgScore += course.getAverageGrade();
+                    }
+                    avgScore /= courses.size();
 
-                if (education instanceof UniversityEducation){
-                    if (education.isFinished()){
-                        usersWhoFinishedUniversity.add(user);
-                        break;
-                        //                отримати поле з назвою універу
+                    if (avgScore > 3) {
+                     usersWhoFinishedFrankaUniversityWithAvgScoregt3.add(user);
+
                     }
                 }
             }
 
         }
+        System.out.println(usersWhoFinishedFrankaUniversityWithAvgScoregt3);
     }
-    // хто закінчив франика в середнім балом бльше 80
     // хто випустився в коронавірусний рік з універу лісотехнічного
+    public static void task15(List<User> users){
+        List<User> usersWhoFinishedMedicalUniversityInTheCOVIDYear = new ArrayList<>();
+        for (User user : users) {
+            for (Education education : user.getEducations()) {
+                if (education.isFinished() &&
+                        education instanceof UniversityEducation &&
+                        "Medical".equals(((UniversityEducation) education).getName())
+                ) {
+                    LocalDate educatedAt = education.getEnd();
+                    int year = educatedAt.getYear();
+                    if (year == 2021) {
+                        usersWhoFinishedMedicalUniversityInTheCOVIDYear.add(user);
+                    }
+                }
+            }
 
+        }
+        System.out.println(usersWhoFinishedMedicalUniversityInTheCOVIDYear);
+
+        for(User user : usersWhoFinishedMedicalUniversityInTheCOVIDYear){
+            System.out.println(user.getName() + " finished university in 2020");
+        }
+
+    }
+    // хто закычив унывер екстерном
+    public static void task16(List<User> users){
+        List<User> userWhoFinishedUniversity = new ArrayList<>();
+        for (User user: users) {
+            for (Education education : user.getEducations()) {
+                if (education instanceof UniversityEducation){
+                    if (education.isFinished()) {
+                        LocalDate start = education.getStart();
+                        LocalDate end = education.getEnd();
+
+                        int startYear = start.getYear();
+                        int endYear = end.getYear();
+
+                        int educationDuration = endYear - startYear;
+
+                        if (educationDuration < 4){
+                            userWhoFinishedUniversity.add(user);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println(userWhoFinishedUniversity);
+
+        for(User user : userWhoFinishedUniversity){
+            System.out.println(user.getName() + " finished university");
+        }
+    }
     // хто переводився зі школи до школи
+    public static void task17(List<User> users) {
+        List<User> usersWhoTransferredFromSchoolToSchool = new ArrayList<>();
+        for (User user : users) {
+            boolean transferredFromSchoolToSchool = false;
+            boolean leftOneSchool = false;
+            int numberOfSchools = 0;
+            for (Education education : user.getEducations()) {
+                if (education instanceof SchoolEducation) {
+                    numberOfSchools++;
+
+                    if (!education.isFinished()){
+                        leftOneSchool = true;
+                    }
+                }
+            }
+
+            transferredFromSchoolToSchool = leftOneSchool && numberOfSchools > 1;
+
+            if (transferredFromSchoolToSchool){
+                usersWhoTransferredFromSchoolToSchool.add(user);
+            }
+        }
+        System.out.println(usersWhoTransferredFromSchoolToSchool);
+
+        for (User user : usersWhoTransferredFromSchoolToSchool) {
+            System.out.println(user.getName() + " Transferred from School to School");
+        }
+
+    }
+
     // середню кількість вищих освіт в залежності від статі
-    // кого частіше виганяли з школи в кожному році
+    public static void task18(List<User> users){
+        int numberOfUniversityEducationsOfMales = 0;
+        int numberOfUniversityEducationsOfFemales = 0;
+        int numberOfMales = 0;
+        int numberOfFemales = 0;
+
+        for (User user : users) {
+            switch (user.getGender()){
+                case MALE:
+                    numberOfMales++;
+                    break;
+                case FEMALE:
+                    numberOfFemales++;
+                    break;
+            }
+
+            for (Education education : user.getEducations()) {
+                if (education instanceof UniversityEducation){
+                    if (education.isFinished()){
+                        if (user.getGender() == Gender.MALE){
+                            numberOfUniversityEducationsOfMales++;
+                        }else if (user.getGender() == Gender.FEMALE){
+                            numberOfUniversityEducationsOfFemales++;
+                        }
+                    }
+                }
+            }
+        }
+
+        double avgNumberOfMalesUniversityEducations = (double) numberOfUniversityEducationsOfMales / numberOfMales;
+        double avgNumberOfFemalesUniversityEducations = numberOfUniversityEducationsOfFemales / numberOfFemales;
+
+        System.out.println(avgNumberOfFemalesUniversityEducations + "Average Female University");
+        System.out.printf("%.2f Average Male University", avgNumberOfMalesUniversityEducations);
+
+
+
+    }
+
+    // яку стать частіше виганяли з школи в кожному році
+    public static void task19(List<User> users){
+        Map<Education, User> notFinishedSchoolEducationPerUser = new HashMap<>();
+        for (User user: users) {
+            for (Education education: user.getEducations()) {
+                if (education instanceof SchoolEducation && !education.isFinished()){
+                    notFinishedSchoolEducationPerUser.put(education, user);
+                }
+            }
+        }
+
+        //Map<YEAR, Map<GENDER, NUMBER_LEFT_SCHOOL>>
+        Map<Integer, Map<Gender, Integer>> temp = new HashMap<>();
+        for(Education nonFinishedEducation : notFinishedSchoolEducationPerUser.keySet()){
+            Gender gender = notFinishedSchoolEducationPerUser.get(nonFinishedEducation).getGender();
+
+            int yearLeftSchool = nonFinishedEducation.getEnd().getYear();
+
+            temp.put(yearLeftSchool, temp.get(gender));
+        }
+
+        Map<Integer, Gender> result = new HashMap<>();
+        for(Integer year : temp.keySet()){
+            Map<Gender, Integer> genderIntegerMap = temp.get(year);
+
+            Integer malesLeftSchool = genderIntegerMap.get(Gender.MALE);
+            Integer femalesLeftSchool = genderIntegerMap.get(Gender.FEMALE);
+
+            if(malesLeftSchool > femalesLeftSchool){
+                result.put(year, Gender.MALE);
+            } else {
+                result.put(year, Gender.FEMALE);
+            }
+        }
+        System.out.println();
+
+    }
+
     //
     private static void task1(List<User> users){
         List<String> names = new ArrayList<>();
