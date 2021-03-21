@@ -6,12 +6,12 @@ public class Course {
 
     private int id;
     private String name;
-    private int averageGrade;
+    private int grade;
 
-    public Course(int id, String name, int averageGrade) {
+    public Course(int id, String name, int grade) {
         this.id = id;
         this.name = name;
-        this.averageGrade = averageGrade;
+        this.grade = grade;
     }
 
     public int getId() {
@@ -30,35 +30,33 @@ public class Course {
         this.name = name;
     }
 
-    public int getAverageGrade() {
-        return averageGrade;
+    public int getGrade() {
+        return grade;
     }
 
-    public void setAverageGrade(int averageGrade) {
-        this.averageGrade = averageGrade;
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Course courses = (Course) o;
-        return id == courses.id &&
-                averageGrade == courses.averageGrade &&
-                Objects.equals(name, courses.name);
+        Course course = (Course) o;
+        return id == course.id && grade == course.grade && Objects.equals(name, course.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, averageGrade);
+        return Objects.hash(id, name, grade);
     }
 
     @Override
     public String toString() {
-        return "Courses{" +
+        return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", averageGrade=" + averageGrade +
+                ", grade=" + grade +
                 '}';
     }
 }
